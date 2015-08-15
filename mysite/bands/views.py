@@ -41,12 +41,14 @@ class BandForm(CreateView):
     template_name = 'bands/band_form.html'
     model = Band
     success_url = reverse_lazy('bands')
+    fields = ['name', 'can_rock']
 
 
 class MemberForm(CreateView):
     template_name = 'bands/member_form.html'
     model = Member
     success_url = reverse_lazy('bands')
+    fields = ['name', 'instrument', 'band']
 
 
 @login_required(login_url='/accounts/login/')
