@@ -12,12 +12,12 @@ def home(request):
 
 
 def band_listing(request):
-    """ A view of all bands. """
+    """ A view of all UploadCMS. """
     bands = Band.objects.all()
     var_get_search = request.GET.get('search_box')
     if var_get_search is not None:
         bands = bands.filter(name__icontains=var_get_search)
-    return render(request, 'bands/band_listing.html', {'bands': bands})
+    return render(request, 'bands/band_listing.html', {'UploadCMS': bands})
 
 
 def band_contact(request):
@@ -30,7 +30,7 @@ def band_contact(request):
 
 
 def band_detail(request, pk):
-    """ A view of all members by bands. """
+    """ A view of all members by UploadCMS. """
     band = Band.objects.get(pk=pk)
     members = Member.objects.all().filter(band=band)
     context = {'members': members, 'band': band}
@@ -40,14 +40,14 @@ def band_detail(request, pk):
 class BandForm(CreateView):
     template_name = 'bands/band_form.html'
     model = Band
-    success_url = reverse_lazy('bands')
+    success_url = reverse_lazy('UploadCMS')
     fields = ['name', 'can_rock']
 
 
 class MemberForm(CreateView):
     template_name = 'bands/member_form.html'
     model = Member
-    success_url = reverse_lazy('bands')
+    success_url = reverse_lazy('UploadCMS')
     fields = ['name', 'instrument', 'band']
 
 

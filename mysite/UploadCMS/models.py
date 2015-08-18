@@ -10,7 +10,7 @@ class Band(models.Model):
     class Meta:
         ordering = ['name']
         verbose_name = 'band'
-        verbose_name_plural = 'bands'
+        verbose_name_plural = 'UploadCMS'
 
     def __str__(self):
         return self.name
@@ -20,7 +20,7 @@ class Band(models.Model):
         return self.band.count()
 
     def get_band_detail_url(self):
-        return u"/bands/%i" % self.id
+        return u"/UploadCMS/%i" % self.id
 
 
 class Member(models.Model):
