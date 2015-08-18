@@ -1,10 +1,10 @@
 from django.conf.urls import patterns, include, url
-from mysite.UploadCMS.views import *
+from upload.UploadCMS.views import *
 
 from django.contrib import admin
 
 urlpatterns = patterns(
-    'mysite.UploadCMS.views',
+    'upload.UploadCMS.views',
     url(r'^$', 'home', name='home'),
     url(r'^repositorios/$', 'band_listing', name='Repositorio'),
     url(r'^repositorios/(?P<pk>\d+)/$', 'band_detail', name='band_detail'),
