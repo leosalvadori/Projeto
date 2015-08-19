@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-    <title>Band Listing</title>
+    <title>Repositories</title>
 {% endblock title %}
 
 {% block content %}
@@ -10,15 +10,14 @@
         <input id="search_box" name="search_box" type="text" placeholder="Search..." class="form-control">
         <button type="submit" class="btn btn-success form-control"><span class="glyphicon glyphicon-search"></span></button>
     </form>
-
-    <h1>All Bands</h1>
-    {% for band in bands %}
+    <h1>Repositories</h1>
+     {% for band in repositories %}
         <ul class="list-group">
           <li class="list-group-item">
             <span class="badge">{{ band.get_members_count }}</span>
-            <h4><a href="{{ band.get_band_detail_url }}">{{ band.name }}</a></h4>
-            {% if band.can_rock %}
-                <p>This band can rock!</p>
+            <h4><a href="{{ band.get_band_detail_url }}">{{ band.name }} - {{ band.guid }}</a></h4>
+            {% if band.is_active %}
+                <p>Active!</p>
             {% endif %}
           </li>
         </ul>

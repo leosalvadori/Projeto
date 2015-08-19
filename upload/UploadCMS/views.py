@@ -13,12 +13,11 @@ def home(request):
 
 def band_listing(request):
     """ A view of all UploadCMS. """
-    bands = Band.objects.all()
+    repositories = Band.objects.all()
     var_get_search = request.GET.get('search_box')
     if var_get_search is not None:
-        bands = bands.filter(name__icontains=var_get_search)
-    return render(request, 'bands/band_listing.html', {'UploadCMS': bands})
-
+        repositories = repositories.filter(name__icontains=var_get_search)
+    return render(request, 'bands/band_listing.html', {'repositories': repositories})
 
 def band_contact(request):
     """ A example of form """
@@ -40,14 +39,14 @@ def band_detail(request, pk):
 class BandForm(CreateView):
     template_name = 'bands/band_form.html'
     model = Band
-    success_url = reverse_lazy('UploadCMS')
-    fields = ['name', 'can_rock']
+    success_url = reverse_lazy('repositories')
+    fields = ['name', 'is_active', 'type']
 
 
 class MemberForm(CreateView):
     template_name = 'bands/member_form.html'
     model = Member
-    success_url = reverse_lazy('UploadCMS')
+    success_url = reverse_lazy('repositories')
     fields = ['name', 'instrument', 'band']
 
 

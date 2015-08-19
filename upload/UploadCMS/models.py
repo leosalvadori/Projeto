@@ -1,3 +1,5 @@
+from random import random
+import hashlib
 from django.db import models
 
 
@@ -5,12 +7,19 @@ class Band(models.Model):
 
     """A model of a rock band."""
     name = models.CharField(max_length=200)
-    can_rock = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
+    guid = models.CharField(max_length=100)
+    type = models.CharField(choices=(
+        ('p', "Public"),
+        ('r', "Private"),
+    ),
+        max_length=1, default='p'
+    )
 
     class Meta:
         ordering = ['name']
         verbose_name = 'band'
-        verbose_name_plural = 'UploadCMS'
+        verbose_name_plural = 'bands'
 
     def __str__(self):
         return self.name
@@ -20,7 +29,11 @@ class Band(models.Model):
         return self.band.count()
 
     def get_band_detail_url(self):
-        return u"/UploadCMS/%i" % self.id
+        return u"/repositories/%i" % self.id
+
+    def save(self, *args, **kwargs):
+        self.guid = hashlib.md5(str(random()).encode('utf-8')).hexdigest()
+        super(Band, self).save(*args, **kwargs)
 
 
 class Member(models.Model):
