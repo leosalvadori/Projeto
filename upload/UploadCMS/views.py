@@ -5,6 +5,10 @@ from django.views.generic import CreateView
 from django.core.urlresolvers import reverse_lazy
 from .models import Band, Member
 from .forms import BandContactForm
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from django.contrib.auth import  login as login_auth
+from django.contrib.auth import logout as logout_auth
 
 
 def home(request):
@@ -49,6 +53,22 @@ class MemberForm(CreateView):
     success_url = reverse_lazy('repositories')
     fields = ['name', 'instrument', 'band']
 
+
+def login(request):
+    if request.method == 'POST':
+        try:
+            usuario = authenticate(username=request.POST.get('login-username'), password=request.POST.get('login-password'))
+            if usuario is not None:
+                #Usuário encontrado, agora basta autenticá-lo e redirecioná-lo para a home:
+                login_auth(request, usuario)
+                return HttpResponse('home.html')
+            else:
+                #Usuário não encontrado, tomar alguma ação como, por exemplo, redirecioná-lo para a pagina de login novamente:
+                return render(request, 'home.html', {'erro': 'Usuário não encontrado'})
+        except:
+            pass
+    else:
+        return render(request, 'bands/login_user.html')
 
 @login_required(login_url='/accounts/login/')
 def protected_view(request):
